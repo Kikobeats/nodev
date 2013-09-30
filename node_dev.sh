@@ -51,7 +51,8 @@
         echo $'\n'" ############## "
         echo " # NODEJS DEV # "
         echo " ############## " $'\n'
-        echo " Uso: $0 <comando>"
+        echo " Uso: $0 <comando>" $'\n'
+        echo "  * [nombre_fichero]: Arranca Node.js con actualización persistente (supervisor)"
         echo "  * debug: Arranca el debug (forever+node-inspector)"
         echo "  * redis_server: Arrancar el REDIS"
         echo "  * mongod: Arranca mongod"
