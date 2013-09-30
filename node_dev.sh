@@ -49,11 +49,7 @@
         echo "  * redis_server: Arrancar el REDIS"
         echo "  * mongod: Arranca mongod"
         echo "  * mongo: Arranca una shell de MongoDB"
-        echo "  * off: Detiene todos los servicios"
-
-        echo "Dependencias:";
-        echo " * npm install node-inspector -g"
-        echo " * npm install supervisor -g"
+        echo "  * off: Detiene todos los servicios"$'\n'
     }
 
     ########
