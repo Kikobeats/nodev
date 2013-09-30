@@ -54,7 +54,7 @@
         echo " Uso: $0 <comando>" $'\n'
         echo "  * [nombre_fichero]: Arranca Node.js con actualización persistente (supervisor)"
         echo "  * debug: Arranca el debug (forever+node-inspector)"
-        echo "  * redis_server: Arrancar el REDIS"
+        echo "  * redis: Arrancar el REDIS"
         echo "  * mongod: Arranca mongod"
         echo "  * mongo: Arranca una shell de MongoDB"
         echo "  * off: Detiene todos los servicios"$'\n'
