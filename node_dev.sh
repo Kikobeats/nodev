@@ -7,7 +7,7 @@
     # REDIS
     # Cacheado en memoria persistente de una base de datos
     redis(){
-        redis_server
+        redis-server
     }
 
     # Forever
