@@ -34,6 +34,13 @@
         fi
     }
 
+    # Supervisor
+    # Arranca Nodejs con actualización persistende de archivos
+    # También activamos el flag debug para node-inspector
+    run_node(){
+        supervisor --debug $1
+    }
+
     # Mata todos los procesos asociados
     disconnect(){
         killall node redis_server mongod
@@ -55,6 +62,7 @@
     ########
     # MAIN #
     ########
+    REGEX=`echo $1 | grep -qx *.js`
 
     [[ $# == 0 ||  $1 == "help" ]] && help_menu || {
 
@@ -73,6 +81,9 @@
 
         elif [[ $1 == "off" ]]; then
             disconnect
+
+        elif [[ !$REGEX ]]; then
+            run_node $1
 
         else
             echo $'\a'" Comando no reconocido. Escriba '$0 help' para ver la ayuda"
