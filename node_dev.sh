@@ -18,9 +18,10 @@
     #
     debugging(){
         if [[ $# == 0 ]]; then
-            forever /usr/local/bin/node-inspector -web-port=9999
+            forever /usr/local/bin/node-inspector --web-port=9999
         else
-            forever /usr/local/bin/node-inspector -web-port=$1
+            echo entramos
+            forever /usr/local/bin/node-inspector --web-port=$1
         fi
     }
 
@@ -71,7 +72,12 @@
             redis
 
         elif [[ $1 == "debug" ]]; then
-            debugging
+            if [[ $# == 2 ]]; then
+                echo entramos
+                debugging $2
+            else
+                debugging
+            fi
 
         elif [[ $1 == "mongo" ]]; then
             if [[ $# == 2 ]]; then
