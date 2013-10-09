@@ -56,8 +56,7 @@
         echo "  * [nombre_fichero]: Arranca Node.js con actualización persistente (supervisor)"
         echo "  * debug: Arranca el debug (forever+node-inspector)"
         echo "  * redis: Arrancar el REDIS"
-        echo "  * mongod: Arranca mongod"
-        echo "  * mongo: Arranca una shell de MongoDB"
+        echo "  * mongo: Arranca MongoDB"
         echo "  * off: Detiene todos los servicios"$'\n'
     }
 
