@@ -4,6 +4,13 @@
     # MÓDULOS #
     # #########
 
+    # Función para matar a los servicios corriendo
+    stopped_service(){
+
+        killall $1
+        [[ $? -eq 0 ]] && echo " $1 was stopped."
+    }
+
     # REDIS
     # Cacheado en memoria persistente de una base de datos
     redis(){
@@ -44,7 +51,9 @@
 
     # Mata todos los procesos asociados
     disconnect(){
-        killall node redis-server mongod
+        stopped_service redis-server
+        stopped_service mongod
+        stopped_service node
     }
 
     # HELP
