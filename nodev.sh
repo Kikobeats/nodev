@@ -44,7 +44,7 @@
 
     # Mata todos los procesos asociados
     disconnect(){
-        killall node redis_server mongod
+        killall node redis-server mongod
     }
 
     # HELP
@@ -52,9 +52,9 @@
         echo $'\n'" ############## "
         echo " # NODEJS DEV # "
         echo " ############## " $'\n'
-        echo " Uso: $0 <comando>" $'\n'
+        echo "  Uso: nodev <comando>" $'\n'
         echo "  * [nombre_fichero]: Arranca Node.js con actualización persistente (supervisor)"
-        echo "  * debug: Arranca el debug (forever+node-inspector)"
+        echo "  * debug [port]: Arranca el debug (forever+node-inspector). Puerto por defecto es 9999"
         echo "  * redis: Arrancar el REDIS"
         echo "  * mongo: Arranca MongoDB"
         echo "  * off: Detiene todos los servicios"$'\n'

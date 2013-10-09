@@ -18,6 +18,20 @@ With none command show the help. Example:
   	* redis: Arrancar el REDIS
   	* mongo: Arranca MongoDB
   	* off: Detiene todos los servicios
+  	
+ 
+Example of usage (run in independents terminal windows):
+
+	nodev redis
+	nodev mongo
+	nodev debug
+	nodev server.js
+
+now, local server is ready with debug interace in ttp://127.0.0.1:9999/debug?port=5858
+
+when you terminate the development kill all instances with
+	
+	nodev off
 
 
 ### SYSTEM Dependencies:
@@ -40,4 +54,9 @@ add this line in ~/.bash_profile:
 	
 	# node_dev settings
 	PATH=$PATH:$HOME/node_dev
+
+### TODO
+
+	Command ON for run secuencies commands in differents terminal.	
+
 	
