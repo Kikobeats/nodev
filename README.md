@@ -1,23 +1,28 @@
-# node.js Development Environment v0.0.1
+# NODEV
 
-Set up your node.js development environment!
+### node.js Development Environment v0.0.2
 
-	nodev <command>
-	
-With none command show the help. Example:
+    ##############
+    # NODEJS DEV #
+    ##############
 
+     usage: nodev [option] [command] <file_name>
 
- 	##############
- 	# NODEJS DEV #
- 	##############
+     files:
+      <file_name>: Run Node.js with persistent update (with supervisor by default)
 
- 	Uso: /Users/josefranciscoverdugambin/node_dev/nodev <comando>
+     commands:
+      status: view global status
+      debug [port]: Run debug (forever+node-inspector). Default port: 9999
+      redis: Run REDIS
+      mongo: Run MongoDB
+      off: kill all services
 
-  	* [nombre_fichero]: Arranca Node.js con actualización persistente (supervisor)
-  	* debug: Arranca el debug (forever+node-inspector)
-  	* redis: Arrancar el REDIS
-  	* mongo: Arranca MongoDB
-  	* off: Detiene todos los servicios
+     options
+      --usage supervisor: By default supervisor is the default library
+      --usage nodemon: Use nodemon instead of supervisor
+
+     NOTE: with nodemon you can restart the server in any moment with 'rs' command
   	
  
 Example of usage (run in independents terminal windows):
@@ -43,8 +48,17 @@ when you terminate the development kill all instances with
 
 ### NPM Dependencies:
 
-	npm-install -g supervisor
-	npm-install -g node-inspector
+	npm install -g supervisor
+	npm install -g node-inspector
+	npm install -g nodemon
+	npm install -g forever
+		
+### Nodemon or Supervisor?
+
+By default the script use supervisor instead of nodemon. But you can change it:
+
+	nodev --usage nodemon
+
 	
 ### Add it in your PATH
 
@@ -54,9 +68,4 @@ add this line in ~/.bash_profile:
 	
 	# node_dev settings
 	PATH=$PATH:$HOME/node_dev
-
-### TODO
-
-	Command ON for run secuencies commands in differents terminal.	
-
 	

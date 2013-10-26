@@ -1,28 +1,26 @@
 #!/bin/bash
 
+    BASEDIR=`dirname $0`
+    CONFIG=$BASEDIR/configfile
+    GLOBAL_SELECTOR=`cat $CONFIG`
+
     ###########
-    # MÓDULOS #
+    # MODULES #
     # #########
 
-    # Función para matar a los servicios corriendo
+    # kill all services
     stopped_service(){
 
         killall $1
         [[ $? -eq 0 ]] && echo " $1 was stopped."
     }
 
-    # REDIS
-    # Cacheado en memoria persistente de una base de datos
+    # Redis process
     redis(){
         redis-server
     }
 
-    # Forever
-    # Monitorea con un demonio un proceso.
-    #
-    # Node-inspector
-    # Debugging para Node.js
-    #
+    # Run node-inspector with forever
     debugging(){
         if [[ $# == 0 ]]; then
             forever /usr/local/bin/node-inspector --web-port=9999
@@ -32,8 +30,7 @@
         fi
     }
 
-    # MongoDB
-    # bbdd basado en NOSQL
+    # MongoDB process
     mongoDB(){
         if [[ $1 == "shell" ]]; then
             mongo
@@ -42,11 +39,38 @@
         fi
     }
 
-    # Supervisor
-    # Arranca Nodejs con actualización persistende de archivos
-    # También activamos el flag debug para node-inspector
+    # Run node.js server with supervisor (default) or nodemon
     run_node(){
-        supervisor --debug $1
+
+        if [[ $GLOBAL_SELECTOR == "supervisor" ]]; then
+            echo "Running node.js with supervisor"
+            supervisor --debug $1
+        else
+            # info: http://nodemon.codeplex.com/
+            echo "Running node.js with nodemon"
+            nodemon --debug $1
+        fi
+    }
+
+    global_runtime(){
+        if [[ $1 == "supervisor" ]]; then
+            echo "supervisor" > $CONFIG
+            echo " Now, 'supervisor' is the main script."
+
+        elif [[ $1 == "nodemon" ]]; then
+            echo "nodemon" > $CONFIG
+            echo " Now, 'nodemon' is the main script."
+
+        else
+            echo "Error. command not found. Try with help command."
+
+        fi
+    }
+
+    status(){
+        echo " Basedir: $BASEDIR"
+        echo " Config file: $CONFIG"
+        echo " Config settings: $GLOBAL_SELECTOR"
     }
 
     # Mata todos los procesos asociados
@@ -58,15 +82,29 @@
 
     # HELP
     help_menu(){
-        echo $'\n'" ############## "
+        echo
+        echo " ############## "
         echo " # NODEJS DEV # "
-        echo " ############## " $'\n'
-        echo "  Uso: nodev <comando>" $'\n'
-        echo "  * [nombre_fichero]: Arranca Node.js con actualización persistente (supervisor)"
-        echo "  * debug [port]: Arranca el debug (forever+node-inspector). Puerto por defecto es 9999"
-        echo "  * redis: Arrancar el REDIS"
-        echo "  * mongo: Arranca MongoDB"
-        echo "  * off: Detiene todos los servicios"$'\n'
+        echo " ############## "
+        echo
+        echo "  usage: nodev [option] [command] <file_name>"
+        echo
+        echo "  files:"
+        echo "   <file_name>: Run Node.js with persistent update (with supervisor by default)"
+        echo
+        echo "  commands:"
+        echo "   status: view global status"
+        echo "   debug [port]: Run debug (forever+node-inspector). Default port: 9999"
+        echo "   redis: Run REDIS"
+        echo "   mongo: Run MongoDB"
+        echo "   off: kill all services"
+        echo
+        echo "  options"
+        echo "   --usage supervisor: By default supervisor is the default library"
+        echo "   --usage nodemon: Use nodemon instead of supervisor"
+        echo
+        echo "  NOTE: with nodemon you can restart the server in any moment with 'rs' command"
+        echo
     }
 
     ########
@@ -76,7 +114,10 @@
 
     [[ $# == 0 ||  $1 == "help" ]] && help_menu || {
 
-        if [[ $1 == "redis" ]]; then
+        if [[ $1 == "status" ]]; then
+            status
+
+        elif [[ $1 == "redis" ]]; then
             redis
 
         elif [[ $1 == "debug" ]]; then
@@ -94,6 +135,9 @@
                 mongoDB
             fi
 
+        elif [[ $1 == "--usage" ]]; then
+            global_runtime $2
+
         elif [[ $1 == "off" ]]; then
             disconnect
 
@@ -101,6 +145,6 @@
             run_node $1
 
         else
-            echo $'\a'" Comando no reconocido. Escriba '$0 help' para ver la ayuda"
+            echo $'\a'" Command not found. write '$0 help' for help"
         fi
     }
